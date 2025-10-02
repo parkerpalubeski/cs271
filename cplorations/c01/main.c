@@ -52,7 +52,7 @@ int fib(int n)
         return 1;
     }
     else{
-        return fib(n-1) + fib(n-2);
+        return fib(n-1) + fib(n-2); //Performs the function again, passing the values n-1 and n-2 instead
     }
 }
  
@@ -91,7 +91,7 @@ int max(int arr[], int n)
 int sum(int arr[], int n)
 {
     int total = 0;
-    for(int i = 0; i < n; i++){
+    for(int i = 0; i < n; i++){ //Loops through all values in the array based on length n
         total += arr[i];
     }
     return total;
@@ -113,13 +113,13 @@ double pie(long int n){
     double pi = 0;
     int denom = 0;
     double fract = 0;
-    for(long int i = 0; i < n; i++){
+    for(long int i = 0; i < n; i++){ //Calculates each term individually, looping through n times
         denom = (2*i)+1;
-        fract = 1.0 / denom;
-        if (i % 2 == 1){
+        fract = 1.0 / denom; //creates the fractional term (e.g. 1/3, 1/5, 1/7, etc.)
+        if (i % 2 == 1){ //Checks if the number is even, assigns it as negative if not
             fract *= -1;
         }
-        pi += fract;
+        pi += fract; //Adds fract to pie
     }
     
     return pi*4;
