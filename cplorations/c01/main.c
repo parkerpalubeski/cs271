@@ -1,29 +1,3 @@
-/*
-
-STATE OF THE ASSIGNMENT
-
-ADD FUNCTION IS COMPLETE AND FUNCTIONAL. FIB, MAX, SUM AND PIE NEED TO BE COMPLETED
-
-
-
-
-
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /****************************************
  * C-ploration 1 for CS 271
  * 
@@ -71,7 +45,15 @@ int add(int n)
  */
 int fib(int n)
 {
-
+    if(n == 0){
+        return 0;
+    }
+    else if(n == 1){
+        return 1;
+    }
+    else{
+        return fib(n-1) + fib(n-2);
+    }
 }
  
  
@@ -87,7 +69,13 @@ int fib(int n)
  */
 int max(int arr[], int n)
 {
-    /** Your CODE here **/
+    int max_num = 0;
+    for(int i = 0; i < n; i++){
+        if(arr[i] > max_num){
+            max_num = arr[i];
+        }
+    }
+    return max_num;
 }
 
 /* Function: sum
@@ -102,7 +90,11 @@ int max(int arr[], int n)
  */
 int sum(int arr[], int n)
 {
-    /** Your CODE here **/
+    int total = 0;
+    for(int i = 0; i < n; i++){
+        total += arr[i];
+    }
+    return total;
 }
 
 
@@ -118,7 +110,19 @@ int sum(int arr[], int n)
  *
  */
 double pie(long int n){
-    /** Your CODE here **/
+    double pi = 0;
+    int denom = 0;
+    double fract = 0;
+    for(long int i = 0; i < n; i++){
+        denom = (2*i)+1;
+        fract = 1.0 / denom;
+        if (i % 2 == 1){
+            fract *= -1;
+        }
+        pi += fract;
+    }
+    
+    return pi*4;
 } 
 
 
