@@ -84,6 +84,7 @@ void reverse(char* txt, char* result) {
 		i--;
 		j++;
 	}
+	result[j] = '\0';
 }
 
 
@@ -142,29 +143,6 @@ int quartile(char* name) {
 	}
 	return q;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* Function: main
