@@ -1,5 +1,5 @@
 /****************************************
- * C-ploration 5 for CS 271
+ * C-ploration 6 for CS 271
  * 
  * [NAME] PARKER PALUBESKI
  * [TERM] FALL 2025
@@ -50,6 +50,9 @@ void parse(FILE * file){
 			inst_type = 'A';
 		}else if(is_label(line) == 1){
 			inst_type = 'L';
+			char label[MAX_LINE_LENGTH];
+			extract_label(line, label);
+			strcpy(line, label);
 		}else if(is_Ctype(line) == 1){
 			inst_type = 'C';
 		}
@@ -76,4 +79,16 @@ bool is_label(const char *line){
 bool is_Ctype(const char *line){
 	//Considering process of elimination prior, any that don't pass the above tests should be Ctype
 	return true;
+}
+
+char *extract_label(const char *line, char* label){
+	char temp[MAX_LINE_LENGTH] = "";
+	int i = 1;
+	while(i < strlen(line) - 1){
+		temp[i-1] = line[i];
+		i++;
+	}
+	temp[i-1] = '\0';
+	strcpy(label, temp);
+	return label;
 }
