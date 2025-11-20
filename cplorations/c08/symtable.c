@@ -1,3 +1,11 @@
+/****************************************
+ * C-ploration 8 for CS 271
+ * 
+ * [NAME] PARKER PALUBESKI
+ * [TERM] FALL 2025
+ * 
+ ****************************************/
+
 #include "symtable.h"
 
 struct Symbol* hashArray[SYMBOL_TABLE_SIZE] = {0};
