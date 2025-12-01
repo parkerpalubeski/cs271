@@ -6,7 +6,6 @@
  * 
  ****************************************/
 #include "parser.h"
-#include "symtable.h"
 #include "error.h"
 
 /* Function: strip
@@ -41,9 +40,11 @@ char *strip(char *s){
  */
 void parse(FILE * file){
 	char line[MAX_LINE_LENGTH];
-	char inst_type;
+//	char inst_type;
 	unsigned int line_num = 0;
 	unsigned int instr_num = 0;
+	struct instruction instr;
+	add_predefined_symbols();
 	while(fgets(line, sizeof(line), file)){
 		line_num++;
 		if(instr_num > MAX_INSTRUCTIONS){
@@ -55,11 +56,15 @@ void parse(FILE * file){
 		}
 		//Logic to determine command type
 		else if(is_Atype(line) == 1){
-			inst_type = 'A';
-			printf("%u: %c  %s\n", instr_num, inst_type, line);
+			if(!parse_A_instruction(line, &instr.a)){
+				exit_program(EXIT_INVALID_A_INSTR, line_num, line);
+			}
+			instr.type = a_type;
+//			inst_type = 'A';
+//			printf("%u: %c  %s\n", instr_num, inst_type, line);
 			instr_num++;
 		}else if(is_label(line) == 1){
-			inst_type = 'L';
+//			inst_type = 'L';
 			char label[MAX_LINE_LENGTH];
 			extract_label(line, label);
 			if(isalpha(label[0]) == 0){
@@ -68,10 +73,10 @@ void parse(FILE * file){
 				exit_program(EXIT_SYMBOL_ALREADY_EXISTS, line_num, label);
 			}
 			strcpy(line, label);
-			symtable_insert(line, line_num);
+			symtable_insert(line, instr_num);
 		}else if(is_Ctype(line) == 1){
-			inst_type = 'C';
-			printf("%u: %c  %s\n", instr_num, inst_type, line);
+//			inst_type = 'C';
+//			printf("%u: %c  %s\n", instr_num, inst_type, line);
 			instr_num++;
 		}
 //		printf("%c  %s\n", inst_type, line);
@@ -110,4 +115,30 @@ char *extract_label(const char *line, char* label){
 	temp[i-1] = '\0';
 	strcpy(label, temp);
 	return label;
+}
+
+void add_predefined_symbols(){
+	for(int i = 0; i < NUM_PREDEFINED_SYMBOLS; i++){
+		predefined_symbol sym = predefined_symbols[i];
+		symtable_insert(sym.name, sym.address);
+	}
+}
+
+
+bool parse_A_instruction(const char *line, struct a_instruction *instr){
+	char* s = malloc(strlen(line));
+	strcpy(s, line+1);
+	char* s_end = NULL;
+	long result = strtol(s, &s_end, 10);
+	if(s == s_end){
+		instr->label = malloc(strlen(line+1)+1);
+		strcpy(instr->label, s);
+		instr->is_addr = false;
+	} else if(*s_end != 0){
+		return false;
+	} else{
+		instr->hack_addr = result;
+		instr->is_addr = true;
+	}
+	return true;
 }

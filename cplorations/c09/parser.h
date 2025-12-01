@@ -16,6 +16,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "hack.h"
+#include "symtable.h"
 
 #define MAX_HACK_ADDRESS INT16_MAX
 #define MAX_INSTRUCTIONS MAX_HACK_ADDRESS
@@ -36,6 +37,40 @@ bool is_Ctype(const char *c);
 
 char *extract_label(const char *line, char* label);
 
+typedef int16_t hack_addr;
+typedef int16_t opcode;
+
+enum instr_type{
+    invalid = -1,
+    a_type,
+    c_type,
+};
+
+struct c_instruction{
+    opcode a:1;
+    opcode comp:6;
+    opcode dest:3;
+    opcode jmp: 3;
+};
+
+struct a_instruction{
+    union{
+        char* label;
+        uint16_t hack_addr;
+    };
+    bool is_addr;
+};
+
+struct instruction{
+    union{
+        struct a_instruction a;
+        struct c_instruction c;
+    };
+    enum instr_type type;
+};
+
 void add_predefined_symbols();
+
+bool parse_A_instruction(const char *line, struct a_instruction *instr);
 
 #endif

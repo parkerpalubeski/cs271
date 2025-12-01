@@ -11,7 +11,7 @@
 
 #define NUM_PREDEFINED_SYMBOLS 23
 
-typedef enum predefined_symbols {
+typedef enum symbol_id {
     SYM_SP = 0,
     SYM_LCL = 1,
     SYM_ARG = 2,
@@ -35,14 +35,14 @@ typedef enum predefined_symbols {
     SYM_R15 = 15,
     SYM_SCREEN = 16384,
     SYM_KBD = 24576
-};
+} symbol_id;
 
-typedef struct predeined_symbol{
+typedef struct predefined_symbol{
     char* name;
     int16_t address;
-}
+} predefined_symbol;
 
-static const predeined_symbol predefined_symbols[NUM_PREDEFINED_SYMBOLS] = {
+static const predefined_symbol predefined_symbols[NUM_PREDEFINED_SYMBOLS] = {
     {"R0", SYM_R0},
     {"R1", SYM_R1},
     {"R2", SYM_R2},
@@ -66,6 +66,6 @@ static const predeined_symbol predefined_symbols[NUM_PREDEFINED_SYMBOLS] = {
     {"THAT", SYM_THAT},
     {"SCREEN", SYM_SCREEN},
     {"KBD", SYM_KBD}
-}
+};
 
 #endif

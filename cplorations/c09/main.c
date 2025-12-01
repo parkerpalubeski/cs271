@@ -19,6 +19,7 @@ int main(int argc, const char *argv[])
         exit_program(EXIT_CANNOT_OPEN_FILE, argv[1]);
     }
 	parse(fin);
+    symtable_print_labels();
 	fclose(fin);
 }
 
