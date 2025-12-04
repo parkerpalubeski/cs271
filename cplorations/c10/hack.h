@@ -86,7 +86,7 @@ typedef enum comp_id{
     COMP_DMINUSM = 83,
     COMP_APLUSD = 3,
     COMP_MPLUSD = 67,
-    COMP_DAND A=0,
+    COMP_DANDA=0,
     COMP_DANDM=64,
     COMP_DORA=5,
     COMP_DORM=69,
@@ -228,7 +228,7 @@ static inline comp_id str_to_compid(const char *s, int *a){
         id = COMP_MPLUSD;
         *a = 1;
     }else if(strcmp(s, "D&A") == 0){
-        id = COMP_DAND A;
+        id = COMP_DANDA;
     }else if(strcmp(s, "D&M") == 0){
         id = COMP_DANDM;
         *a = 1;

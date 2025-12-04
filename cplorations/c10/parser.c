@@ -144,4 +144,5 @@ bool parse_A_instruction(const char *line, struct a_instruction *instr){
 }
 
 void parse_C_instruction(const char *line, struct c_instruction *instr){
+
 }
