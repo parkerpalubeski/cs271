@@ -50,7 +50,7 @@ struct c_instruction{
     opcode a:1;
     opcode comp:7;
     opcode dest:4;
-    opcode jmp: 4;
+    opcode jmp:4;
 };
 
 struct a_instruction{

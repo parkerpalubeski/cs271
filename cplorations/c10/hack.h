@@ -35,7 +35,7 @@ typedef enum symbol_id {
     SYM_R15 = 15,
     SYM_SCREEN = 16384,
     SYM_KBD = 24576
-} symbol_id;
+}symbol_id;
 
 typedef enum jump_id{
     JMP_INVALID = -1,
@@ -86,17 +86,17 @@ typedef enum comp_id{
     COMP_DMINUSM = 83,
     COMP_APLUSD = 3,
     COMP_MPLUSD = 67,
-    COMP_DANDA=0,
-    COMP_DANDM=64,
-    COMP_DORA=5,
-    COMP_DORM=69,
+    COMP_DANDA = 0,
+    COMP_DANDM = 64,
+    COMP_DORA = 5,
+    COMP_DORM = 69,
     COMP_INVALID = -1
 }comp_id;
 
 typedef struct predefined_symbol{
     char* name;
     int16_t address;
-} predefined_symbol;
+}predefined_symbol;
 
 static const predefined_symbol predefined_symbols[NUM_PREDEFINED_SYMBOLS] = {
     {"R0", SYM_R0},
@@ -240,5 +240,6 @@ static inline comp_id str_to_compid(const char *s, int *a){
     }
     return id;
 }
+
 
 #endif
