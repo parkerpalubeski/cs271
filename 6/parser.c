@@ -160,6 +160,7 @@ bool parse_A_instruction(const char *line, a_instruction *instr){
 		instr->hack_addr = result;
 		instr->is_addr = true;
 	}
+	free(s);
 	return true;
 }
 
@@ -183,13 +184,52 @@ void parse_C_instruction(const char *line, c_instruction *instr) {
 }
 
 void assemble(const char* file_name, instruction* instructions, int instr_num){
+	//Open/create file for writing
 	char temp[40];
 	strcpy(temp, file_name);
-	char* file = strchr(temp, '/');
-	if(file!=NULL){
-		file++;
+	char* file = temp;
+	strcat(file, ".hack");
+	printf("Opening file for writing: %s\n", file);
+	FILE *fout = fopen(file, "w+");
+    if(fout == NULL){ 
+        exit_program(EXIT_CANNOT_OPEN_FILE, file);
+    }
+	opcode curr;
+	int avail_addr = 16;
+	for(int i = 0; i < instr_num; i++){
+		if(instructions[i].type == a_type){
+			if(instructions[i].a.is_addr == true){ //A-type Address
+				printf("Debug: A-type address\n");
+				curr = instructions[i].a.hack_addr;
+				printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", OPCODE_TO_BINARY(curr));
+			}else{ // A-type Label
+				printf("Debug: A-type Label: %s\n", instructions[i].a.label);
+				struct Symbol *a = (symtable_find(instructions[i].a.label));
+				if(a!=NULL){
+					curr = a->addr;
+					printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", OPCODE_TO_BINARY(curr));
+				}else{
+					printf("Label not found in symbol table. Inserting: %s\n",instructions[i].a.label);
+					curr = avail_addr;
+					symtable_insert(instructions[i].a.label, avail_addr);
+					avail_addr++;
+				}
+
+			}
+		}else{ //C-type
+			curr = instruction_to_opcode(instructions[i].c);
+			
+		}
+		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", OPCODE_TO_BINARY(curr));
 	}
-	//strcat(file, ".hack");
-	//printf("%s", file);
-	
+
+
+
+
+
+	//Close file pointer
+	fclose(fout);
+}
+
+opcode instruction_to_opcode(c_instruction instr){
 }
