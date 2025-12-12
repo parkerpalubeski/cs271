@@ -1,0 +1,12 @@
+#Nand2tetris Hack Assembler
+
+##Description
+This is an assembler that converts hack assembly to machine-readable binary code.
+
+##Installation
+-Clone the reposity to your computer
+-Run "make" in your command line
+
+##Usage
+-Run ./main {arg}, arg being the name/path of an .asm file
+--Ex. ./main max/Max.asm

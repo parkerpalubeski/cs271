@@ -189,7 +189,7 @@ void assemble(const char* file_name, instruction* instructions, int instr_num){
 	strcpy(temp, file_name);
 	char* file = temp;
 	strcat(file, ".hack");
-	printf("Opening file for writing: %s\n", file);
+	printf("\nOpening file for writing: %s\n\n", file);
 	FILE *fout = fopen(file, "w+");
     if(fout == NULL){ 
         exit_program(EXIT_CANNOT_OPEN_FILE, file);
@@ -227,12 +227,9 @@ void assemble(const char* file_name, instruction* instructions, int instr_num){
 		fprintf(fout, "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", OPCODE_TO_BINARY(curr));
 		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", OPCODE_TO_BINARY(curr));
 	}
-
-
-
-
-
 	//Close file pointer
+	printf("\n\nAssembling Complete : Exiting program\n");
+
 	fclose(fout);
 }
 
