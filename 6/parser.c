@@ -199,17 +199,15 @@ void assemble(const char* file_name, instruction* instructions, int instr_num){
 	for(int i = 0; i < instr_num; i++){
 		if(instructions[i].type == a_type){
 			if(instructions[i].a.is_addr == true){ //A-type Address
-				printf("Debug: A-type address\n");
+//				printf("Debug: A-type address\n");
 				curr = instructions[i].a.hack_addr;
-				printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", OPCODE_TO_BINARY(curr));
 			}else{ // A-type Label
-				printf("Debug: A-type Label: %s\n", instructions[i].a.label);
+//				printf("Debug: A-type Label: %s\n", instructions[i].a.label);
 				struct Symbol *a = (symtable_find(instructions[i].a.label));
 				if(a!=NULL){
 					curr = a->addr;
-					printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", OPCODE_TO_BINARY(curr));
 				}else{
-					printf("Label not found in symbol table. Inserting: %s\n",instructions[i].a.label);
+//					printf("Label not found in symbol table. Inserting: %s\n",instructions[i].a.label);
 					curr = avail_addr;
 					symtable_insert(instructions[i].a.label, avail_addr);
 					avail_addr++;
@@ -217,10 +215,17 @@ void assemble(const char* file_name, instruction* instructions, int instr_num){
 
 			}
 		}else{ //C-type
+//			printf("C-type instruction\n");
 			curr = instruction_to_opcode(instructions[i].c);
 			
 		}
-		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", OPCODE_TO_BINARY(curr));
+		//fprints, prevents hanging empty line at the end
+		if(i != 0){
+			fprintf(fout, "\n");
+			printf("\n");
+		}
+		fprintf(fout, "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", OPCODE_TO_BINARY(curr));
+		printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c", OPCODE_TO_BINARY(curr));
 	}
 
 
@@ -232,4 +237,11 @@ void assemble(const char* file_name, instruction* instructions, int instr_num){
 }
 
 opcode instruction_to_opcode(c_instruction instr){
+	opcode op = 0;
+	op = (7 << 13);
+	op |= instr.a << 12;
+    op |= instr.comp << 6;
+    op |= instr.dest << 3;
+    op |= instr.jmp;
+	return op;
 }
